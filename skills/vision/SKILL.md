@@ -1,15 +1,15 @@
 ---
-name: docs-vision
+name: vision
 description: Use when generating product vision documents - creates PRODUCT_VISION, MVP_DEFINITION, TARGET_PERSONAS, VALUE_PROPOSITION
 ---
 
-# Documentation: Vision Phase
+# Vision
 
 ## Overview
 
 Generate vision phase documents that define product direction, target users, and value proposition.
 
-**Announce at start:** "I'm using the docs-vision skill to generate vision documents."
+**Announce at start:** "I'm using the vision skill to generate vision documents."
 
 ## Documents Generated
 

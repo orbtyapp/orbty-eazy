@@ -1,15 +1,15 @@
 ---
-name: docs-inception
+name: inception
 description: Use when generating project inception documents - creates PROJECT_CHARTER, STAKEHOLDER_MAP, TECH_RADAR, KICKOFF_CHECKLIST
 ---
 
-# Documentation: Inception Phase
+# Inception
 
 ## Overview
 
 Generate inception phase documents that establish project foundation, stakeholders, and technology choices.
 
-**Announce at start:** "I'm using the docs-inception skill to generate inception documents."
+**Announce at start:** "I'm using the inception skill to generate inception documents."
 
 ## Documents Generated
 

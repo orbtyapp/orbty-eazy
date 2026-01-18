@@ -85,3 +85,53 @@ The skill itself tells you which.
 ## User Instructions
 
 Instructions say WHAT, not HOW. "Add X" or "Fix Y" doesn't mean skip workflows.
+
+## Skill Catalog
+
+### Bootstrap & Documentation
+
+| Skill | Purpose |
+|-------|---------|
+| `bootstrap` | Start new projects, set up docs structure |
+| `inception` | PROJECT_CHARTER, STAKEHOLDER_MAP, TECH_RADAR, KICKOFF_CHECKLIST |
+| `vision` | PRODUCT_VISION, MVP_DEFINITION, TARGET_PERSONAS, VALUE_PROPOSITION |
+| `architecture` | SYSTEM_OVERVIEW, API_DESIGN, DATA_MODEL, SECURITY, ADRs |
+| `frontend-design` | Full Suite design docs (Docs Mode) OR UI task execution (Implementation Mode) |
+
+### Planning
+
+| Skill | Purpose |
+|-------|---------|
+| `project-planning` | Orchestrates full planning hierarchy |
+| `roadmap-planning` | ROADMAP.md with milestones |
+| `story-planning` | USER_STORIES.md |
+| `epic-planning` | Epic INDEX.md with Kanban folders |
+| `task-planning` | TASK.md skeletons with specialist field |
+
+### Development Workflow
+
+| Skill | Purpose |
+|-------|---------|
+| `brainstorming` | Turn ideas into designs through dialogue |
+| `writing-plans` | Enrich TASKs with TDD implementation steps |
+| `executing-plans` | Execute plans with specialist delegation |
+| `test-driven-development` | TDD workflow |
+| `systematic-debugging` | Debug workflow |
+
+### Git & Review
+
+| Skill | Purpose |
+|-------|---------|
+| `using-git-worktrees` | Create isolated workspaces |
+| `finishing-a-development-branch` | Merge, PR, or cleanup |
+| `requesting-code-review` | Request review |
+| `receiving-code-review` | Handle review feedback |
+| `verification-before-completion` | Verify before claiming done |
+
+### Meta
+
+| Skill | Purpose |
+|-------|---------|
+| `writing-skills` | Create or edit skills |
+| `dispatching-parallel-agents` | Run independent tasks in parallel |
+| `subagent-driven-development` | Execute plans with subagents |

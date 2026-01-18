@@ -1,15 +1,15 @@
 ---
-name: docs-bootstrap
+name: bootstrap
 description: Use when starting a new project or setting up documentation structure - bootstraps docs/ folder with lifecycle documents and planning hierarchy
 ---
 
-# Documentation Bootstrap
+# Bootstrap
 
 ## Overview
 
 Bootstrap project documentation structure with lifecycle phases and planning hierarchy. Performs due diligence first, then creates appropriate documentation based on repo state.
 
-**Announce at start:** "I'm using the docs-bootstrap skill to set up project documentation."
+**Announce at start:** "I'm using the bootstrap skill to set up project documentation."
 
 ## The Process
 
@@ -110,7 +110,8 @@ Show current state:
 ### Standard Project
 
 ```bash
-mkdir -p docs/{inception,vision,architecture,design,planning/epics}
+mkdir -p docs/{inception,vision,architecture,design/references,planning/epics}
+touch docs/design/references/.gitkeep
 ```
 
 Creates:
@@ -121,6 +122,7 @@ docs/
 ├── architecture/
 │   └── adr/
 ├── design/
+│   └── references/
 └── planning/
     └── epics/
 ```
@@ -133,7 +135,8 @@ mkdir -p docs/{architecture,diagrams,adr}
 
 # Per-app docs
 for app in apps/*; do
-  mkdir -p "$app/docs/{inception,vision,architecture,design,planning/epics}"
+  mkdir -p "$app/docs/{inception,vision,architecture,design/references,planning/epics}"
+  touch "$app/docs/design/references/.gitkeep"
 done
 ```
 
@@ -155,10 +158,10 @@ Invoke specialized skills for each phase:
 
 ### For New Setup (all phases)
 
-1. **REQUIRED SUB-SKILL:** Use `orbty-eazy:docs-inception`
-2. **REQUIRED SUB-SKILL:** Use `orbty-eazy:docs-vision`
-3. **REQUIRED SUB-SKILL:** Use `orbty-eazy:docs-architecture`
-4. **REQUIRED SUB-SKILL:** Use `orbty-eazy:docs-design`
+1. **REQUIRED SUB-SKILL:** Use `orbty-eazy:inception`
+2. **REQUIRED SUB-SKILL:** Use `orbty-eazy:vision`
+3. **REQUIRED SUB-SKILL:** Use `orbty-eazy:architecture`
+4. **REQUIRED SUB-SKILL:** Use `orbty-eazy:frontend-design` (Docs Mode)
 5. **REQUIRED SUB-SKILL:** Use `orbty-eazy:project-planning`
 
 ### For Update Mode
@@ -170,13 +173,13 @@ Only invoke skills for phases user selected to update.
 After document generation:
 
 ```markdown
-## Documentation Bootstrap Complete
+## Bootstrap Complete
 
 ### Created Structure
 - docs/inception/ (4 documents)
 - docs/vision/ (4 documents)
 - docs/architecture/ (5 documents)
-- docs/design/ (2 documents)
+- docs/design/ (7 documents + references/)
 - docs/planning/ (ROADMAP, USER_STORIES, 1 epic, 3 tasks)
 
 ### Next Steps
@@ -186,10 +189,10 @@ After document generation:
 4. Use `orbty-eazy:executing-plans` to implement enriched TASKs
 
 ### Commands Available
-- `/docs-inception` - Update inception docs
-- `/docs-vision` - Update vision docs
-- `/docs-architecture` - Update architecture docs
-- `/docs-design` - Update design docs
+- `/inception` - Update inception docs
+- `/vision` - Update vision docs
+- `/architecture` - Update architecture docs
+- `/frontend-design` - Update design docs or implement UI tasks
 - `/project-planning` - Update planning hierarchy
 ```
 

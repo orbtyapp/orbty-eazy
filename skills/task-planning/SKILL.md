@@ -40,6 +40,7 @@ Create task skeletons with rich metadata, acceptance criteria, and placeholders 
 | **Status**   | ⏳ Todo              |
 | **Estimate** | {hours}h             |
 | **Assignee** | TBD                  |
+| **Specialist** | none / frontend-design |
 | **Created**  | {YYYY-MM-DD}         |
 
 ---
@@ -195,6 +196,36 @@ When ready to implement a task:
    - Verification commands
 5. Task is ready for `orbty-eazy:executing-plans`
 
+## Specialist Field
+
+The `Specialist` field enables skill-chain delegation during execution.
+
+### Valid Values
+
+| Value | Description |
+|-------|-------------|
+| `none` | Default. Task executed by executing-plans directly |
+| `frontend-design` | UI/UX tasks. Delegates to frontend-design skill |
+
+### When to Use `frontend-design`
+
+Set `Specialist: frontend-design` for tasks involving:
+- Component creation (buttons, forms, modals, cards)
+- Page layouts and templates
+- Styling and theming
+- Animations and micro-interactions
+- Responsive design
+- UI refactoring
+
+### Execution Flow
+
+```
+executing-plans reads TASK.md
+  ├── Specialist: none → Execute directly
+  └── Specialist: frontend-design → Delegate to frontend-design skill
+        └── frontend-design loads design docs as constraints
+```
+
 ## Remember
 
 - Task skeleton = WHAT (requirements)
@@ -202,3 +233,4 @@ When ready to implement a task:
 - Keep tasks focused (2-8 hours)
 - Every task traces to a user story
 - Leave Implementation Steps empty during planning
+- Set Specialist field for UI tasks

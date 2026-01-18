@@ -1,15 +1,15 @@
 ---
-name: docs-architecture
+name: architecture
 description: Use when generating architecture documents - creates SYSTEM_OVERVIEW, API_DESIGN, DATA_MODEL, SECURITY, and ADRs
 ---
 
-# Documentation: Architecture Phase
+# Architecture
 
 ## Overview
 
 Generate architecture documents that define system structure, APIs, data models, and key decisions.
 
-**Announce at start:** "I'm using the docs-architecture skill to generate architecture documents."
+**Announce at start:** "I'm using the architecture skill to generate architecture documents."
 
 ## Documents Generated
 

@@ -21,28 +21,51 @@ Load plan, review critically, execute tasks in batches, report for review betwee
 3. If concerns: Raise them with your human partner before starting
 4. If no concerns: Create TodoWrite and proceed
 
-### Step 2: Execute Batch
-**Default: First 3 tasks**
+### Step 2: Check Specialist
 
-For each task:
+Before executing each task, check the `Specialist` field in TASK.md metadata:
+
+```
+Read TASK.md → Check Specialist field
+  │
+  ├── Specialist: none (or not specified)
+  │     → Execute directly (Step 3)
+  │
+  └── Specialist: frontend-design
+        → Delegate to frontend-design skill
+        → frontend-design reads design docs as constraints
+        → frontend-design executes the task
+        → Continue to next task
+```
+
+**REQUIRED:** When delegating to a specialist:
+1. Announce: "This task has Specialist: frontend-design. Delegating to frontend-design skill."
+2. **INVOKE SUB-SKILL:** Use `orbty-eazy:frontend-design`
+3. Let the specialist complete the task
+4. Mark task as completed after specialist finishes
+
+### Step 3: Execute Batch
+**Default: First 3 tasks (non-specialist tasks)**
+
+For each task without specialist delegation:
 1. Mark as in_progress
 2. Follow each step exactly (plan has bite-sized steps)
 3. Run verifications as specified
 4. Mark as completed
 
-### Step 3: Report
+### Step 4: Report
 When batch complete:
 - Show what was implemented
 - Show verification output
 - Say: "Ready for feedback."
 
-### Step 4: Continue
+### Step 5: Continue
 Based on feedback:
 - Apply changes if needed
 - Execute next batch
 - Repeat until complete
 
-### Step 5: Complete Development
+### Step 6: Complete Development
 
 After all tasks complete and verified:
 - Announce: "I'm using the finishing-a-development-branch skill to complete this work."
