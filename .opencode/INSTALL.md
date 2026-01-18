@@ -11,8 +11,8 @@
 ### 1. Install Superpowers
 
 ```bash
-mkdir -p ~/.config/opencode/eazy
-git clone https://github.com/obra/eazy.git ~/.config/opencode/eazy
+mkdir -p ~/.config/opencode/orbty-eazy
+git clone https://github.com/obra/orbty-eazy.git ~/.config/opencode/orbty-eazy
 ```
 
 ### 2. Register the Plugin
@@ -21,14 +21,14 @@ Create a symlink so OpenCode discovers the plugin:
 
 ```bash
 mkdir -p ~/.config/opencode/plugin
-ln -sf ~/.config/opencode/eazy/.opencode/plugin/eazy.js ~/.config/opencode/plugin/eazy.js
+ln -sf ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js ~/.config/opencode/plugin/orbty-eazy.js
 ```
 
 ### 3. Restart OpenCode
 
-Restart OpenCode. The plugin will automatically inject eazy context via the chat.message hook.
+Restart OpenCode. The plugin will automatically inject orbty-eazy context via the chat.message hook.
 
-You should see eazy is active when you ask "do you have eazy?"
+You should see orbty-eazy is active when you ask "do you have orbty-eazy?"
 
 ## Usage
 
@@ -45,7 +45,7 @@ use find_skills tool
 Use the `use_skill` tool to load a specific skill:
 
 ```
-use use_skill tool with skill_name: "eazy:brainstorming"
+use use_skill tool with skill_name: "orbty-eazy:brainstorming"
 ```
 
 ### Personal Skills
@@ -69,7 +69,7 @@ description: Use when [condition] - [what it does]
 [Your skill content here]
 ```
 
-Personal skills override eazy skills with the same name.
+Personal skills override orbty-eazy skills with the same name.
 
 ### Project Skills
 
@@ -93,17 +93,17 @@ description: Use when [condition] - [what it does]
 [Your skill content here]
 ```
 
-**Skill Priority:** Project skills override personal skills, which override eazy skills.
+**Skill Priority:** Project skills override personal skills, which override orbty-eazy skills.
 
 **Skill Naming:**
 - `project:skill-name` - Force project skill lookup
-- `skill-name` - Searches project → personal → eazy
-- `eazy:skill-name` - Force eazy skill lookup
+- `skill-name` - Searches project → personal → orbty-eazy
+- `orbty-eazy:skill-name` - Force orbty-eazy skill lookup
 
 ## Updating
 
 ```bash
-cd ~/.config/opencode/eazy
+cd ~/.config/opencode/orbty-eazy
 git pull
 ```
 
@@ -111,13 +111,13 @@ git pull
 
 ### Plugin not loading
 
-1. Check plugin file exists: `ls ~/.config/opencode/eazy/.opencode/plugin/eazy.js`
+1. Check plugin file exists: `ls ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js`
 2. Check OpenCode logs for errors
 3. Verify Node.js is installed: `node --version`
 
 ### Skills not found
 
-1. Verify skills directory exists: `ls ~/.config/opencode/eazy/skills`
+1. Verify skills directory exists: `ls ~/.config/opencode/orbty-eazy/skills`
 2. Use `find_skills` tool to see what's discovered
 3. Check file structure: each skill should have a `SKILL.md` file
 
@@ -131,5 +131,5 @@ When a skill references a Claude Code tool you don't have:
 
 ## Getting Help
 
-- Report issues: https://github.com/obra/eazy/issues
-- Documentation: https://github.com/obra/eazy
+- Report issues: https://github.com/obra/orbty-eazy/issues
+- Documentation: https://github.com/obra/orbty-eazy

@@ -1,6 +1,6 @@
 # Svelte Todo List - Implementation Plan
 
-Execute this plan using the `eazy:subagent-driven-development` skill.
+Execute this plan using the `orbty-eazy:subagent-driven-development` skill.
 
 ## Context
 

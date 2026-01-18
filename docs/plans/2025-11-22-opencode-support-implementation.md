@@ -1,8 +1,8 @@
 # OpenCode Support Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use eazy:executing-plans to implement this plan task-by-task.
+> **For Claude:** REQUIRED SUB-SKILL: Use orbty-eazy:executing-plans to implement this plan task-by-task.
 
-**Goal:** Add full eazy support for OpenCode.ai with a native JavaScript plugin that shares core functionality with the existing Codex implementation.
+**Goal:** Add full orbty-eazy support for OpenCode.ai with a native JavaScript plugin that shares core functionality with the existing Codex implementation.
 
 **Architecture:** Extract common skill discovery/parsing logic into `lib/skills-core.js`, refactor Codex to use it, then build OpenCode plugin using their native plugin API with custom tools and session hooks.
 
@@ -16,7 +16,7 @@
 
 **Files:**
 - Create: `lib/skills-core.js`
-- Reference: `.codex/eazy-codex` (lines 40-74)
+- Reference: `.codex/orbty-eazy-codex` (lines 40-74)
 
 **Step 1: Create lib/skills-core.js with extractFrontmatter function**
 
@@ -98,7 +98,7 @@ git commit -m "feat: create shared skills core module with frontmatter parser"
 
 **Files:**
 - Modify: `lib/skills-core.js`
-- Reference: `.codex/eazy-codex` (lines 97-136)
+- Reference: `.codex/orbty-eazy-codex` (lines 97-136)
 
 **Step 1: Add findSkillsInDir function to skills-core.js**
 
@@ -109,7 +109,7 @@ Add before `module.exports`:
  * Find all SKILL.md files in a directory recursively.
  *
  * @param {string} dir - Directory to search
- * @param {string} sourceType - 'personal' or 'eazy' for namespacing
+ * @param {string} sourceType - 'personal' or 'orbty-eazy' for namespacing
  * @param {number} maxDepth - Maximum recursion depth (default: 3)
  * @returns {Array<{path: string, name: string, description: string, sourceType: string}>}
  */
@@ -180,7 +180,7 @@ git commit -m "feat: add skill discovery function to core module"
 
 **Files:**
 - Modify: `lib/skills-core.js`
-- Reference: `.codex/eazy-codex` (lines 212-280)
+- Reference: `.codex/orbty-eazy-codex` (lines 212-280)
 
 **Step 1: Add resolveSkillPath function**
 
@@ -189,19 +189,19 @@ Add before `module.exports`:
 ```javascript
 /**
  * Resolve a skill name to its file path, handling shadowing
- * (personal skills override eazy skills).
+ * (personal skills override orbty-eazy skills).
  *
- * @param {string} skillName - Name like "eazy:brainstorming" or "my-skill"
- * @param {string} eazyDir - Path to eazy skills directory
+ * @param {string} skillName - Name like "orbty-eazy:brainstorming" or "my-skill"
+ * @param {string} orbty-eazyDir - Path to orbty-eazy skills directory
  * @param {string} personalDir - Path to personal skills directory
  * @returns {{skillFile: string, sourceType: string, skillPath: string} | null}
  */
-function resolveSkillPath(skillName, eazyDir, personalDir) {
-    // Strip eazy: prefix if present
-    const forceSuperpowers = skillName.startsWith('eazy:');
-    const actualSkillName = forceSuperpowers ? skillName.replace(/^eazy:/, '') : skillName;
+function resolveSkillPath(skillName, orbty-eazyDir, personalDir) {
+    // Strip orbty-eazy: prefix if present
+    const forceSuperpowers = skillName.startsWith('orbty-eazy:');
+    const actualSkillName = forceSuperpowers ? skillName.replace(/^orbty-eazy:/, '') : skillName;
 
-    // Try personal skills first (unless explicitly eazy:)
+    // Try personal skills first (unless explicitly orbty-eazy:)
     if (!forceSuperpowers && personalDir) {
         const personalPath = path.join(personalDir, actualSkillName);
         const personalSkillFile = path.join(personalPath, 'SKILL.md');
@@ -214,14 +214,14 @@ function resolveSkillPath(skillName, eazyDir, personalDir) {
         }
     }
 
-    // Try eazy skills
-    if (eazyDir) {
-        const eazyPath = path.join(eazyDir, actualSkillName);
-        const eazySkillFile = path.join(eazyPath, 'SKILL.md');
-        if (fs.existsSync(eazySkillFile)) {
+    // Try orbty-eazy skills
+    if (orbty-eazyDir) {
+        const orbty-eazyPath = path.join(orbty-eazyDir, actualSkillName);
+        const orbty-eazySkillFile = path.join(orbty-eazyPath, 'SKILL.md');
+        if (fs.existsSync(orbty-eazySkillFile)) {
             return {
-                skillFile: eazySkillFile,
-                sourceType: 'eazy',
+                skillFile: orbty-eazySkillFile,
+                sourceType: 'orbty-eazy',
                 skillPath: actualSkillName
             };
         }
@@ -259,7 +259,7 @@ git commit -m "feat: add skill path resolution with shadowing support"
 
 **Files:**
 - Modify: `lib/skills-core.js`
-- Reference: `.codex/eazy-codex` (lines 16-38)
+- Reference: `.codex/orbty-eazy-codex` (lines 16-38)
 
 **Step 1: Add checkForUpdates function**
 
@@ -333,7 +333,7 @@ git commit -m "feat: add git update checking to core module"
 ### Task 5: Update Codex to Import Shared Core
 
 **Files:**
-- Modify: `.codex/eazy-codex` (add import at top)
+- Modify: `.codex/orbty-eazy-codex` (add import at top)
 
 **Step 1: Add import statement**
 
@@ -345,13 +345,13 @@ const skillsCore = require('../lib/skills-core');
 
 **Step 2: Verify syntax**
 
-Run: `node -c .codex/eazy-codex`
+Run: `node -c .codex/orbty-eazy-codex`
 Expected: No output
 
 **Step 3: Commit**
 
 ```bash
-git add .codex/eazy-codex
+git add .codex/orbty-eazy-codex
 git commit -m "refactor: import shared skills core in codex"
 ```
 
@@ -360,7 +360,7 @@ git commit -m "refactor: import shared skills core in codex"
 ### Task 6: Replace extractFrontmatter with Core Version
 
 **Files:**
-- Modify: `.codex/eazy-codex` (lines 40-74)
+- Modify: `.codex/orbty-eazy-codex` (lines 40-74)
 
 **Step 1: Remove local extractFrontmatter function**
 
@@ -374,13 +374,13 @@ Affected lines approximately: 90, 310
 
 **Step 3: Verify script still works**
 
-Run: `.codex/eazy-codex find-skills | head -20`
+Run: `.codex/orbty-eazy-codex find-skills | head -20`
 Expected: Shows list of skills
 
 **Step 4: Commit**
 
 ```bash
-git add .codex/eazy-codex
+git add .codex/orbty-eazy-codex
 git commit -m "refactor: use shared extractFrontmatter in codex"
 ```
 
@@ -389,7 +389,7 @@ git commit -m "refactor: use shared extractFrontmatter in codex"
 ### Task 7: Replace findSkillsInDir with Core Version
 
 **Files:**
-- Modify: `.codex/eazy-codex` (lines 97-136, approximately)
+- Modify: `.codex/orbty-eazy-codex` (lines 97-136, approximately)
 
 **Step 1: Remove local findSkillsInDir function**
 
@@ -401,13 +401,13 @@ Replace calls from `findSkillsInDir(` to `skillsCore.findSkillsInDir(`
 
 **Step 3: Verify script still works**
 
-Run: `.codex/eazy-codex find-skills | head -20`
+Run: `.codex/orbty-eazy-codex find-skills | head -20`
 Expected: Shows list of skills
 
 **Step 4: Commit**
 
 ```bash
-git add .codex/eazy-codex
+git add .codex/orbty-eazy-codex
 git commit -m "refactor: use shared findSkillsInDir in codex"
 ```
 
@@ -416,7 +416,7 @@ git commit -m "refactor: use shared findSkillsInDir in codex"
 ### Task 8: Replace checkForUpdates with Core Version
 
 **Files:**
-- Modify: `.codex/eazy-codex` (lines 16-38, approximately)
+- Modify: `.codex/orbty-eazy-codex` (lines 16-38, approximately)
 
 **Step 1: Remove local checkForUpdates function**
 
@@ -428,13 +428,13 @@ Replace calls from `checkForUpdates(` to `skillsCore.checkForUpdates(`
 
 **Step 3: Verify script still works**
 
-Run: `.codex/eazy-codex bootstrap | head -50`
+Run: `.codex/orbty-eazy-codex bootstrap | head -50`
 Expected: Shows bootstrap content
 
 **Step 4: Commit**
 
 ```bash
-git add .codex/eazy-codex
+git add .codex/orbty-eazy-codex
 git commit -m "refactor: use shared checkForUpdates in codex"
 ```
 
@@ -445,7 +445,7 @@ git commit -m "refactor: use shared checkForUpdates in codex"
 ### Task 9: Create OpenCode Plugin Directory Structure
 
 **Files:**
-- Create: `.opencode/plugin/eazy.js`
+- Create: `.opencode/plugin/orbty-eazy.js`
 
 **Step 1: Create directory**
 
@@ -469,7 +469,7 @@ const fs = require('fs');
 const os = require('os');
 
 const homeDir = os.homedir();
-const eazySkillsDir = path.join(homeDir, '.config/opencode/eazy/skills');
+const orbty-eazySkillsDir = path.join(homeDir, '.config/opencode/orbty-eazy/skills');
 const personalSkillsDir = path.join(homeDir, '.config/opencode/skills');
 
 /**
@@ -484,13 +484,13 @@ export const SuperpowersPlugin = async ({ project, client, $, directory, worktre
 
 **Step 3: Verify file was created**
 
-Run: `ls -l .opencode/plugin/eazy.js`
+Run: `ls -l .opencode/plugin/orbty-eazy.js`
 Expected: File exists
 
 **Step 4: Commit**
 
 ```bash
-git add .opencode/plugin/eazy.js
+git add .opencode/plugin/orbty-eazy.js
 git commit -m "feat: create opencode plugin scaffold"
 ```
 
@@ -499,7 +499,7 @@ git commit -m "feat: create opencode plugin scaffold"
 ### Task 10: Implement use_skill Tool
 
 **Files:**
-- Modify: `.opencode/plugin/eazy.js`
+- Modify: `.opencode/plugin/orbty-eazy.js`
 
 **Step 1: Add use_skill tool implementation**
 
@@ -516,13 +516,13 @@ export const SuperpowersPlugin = async ({ project, client, $, directory, worktre
         name: 'use_skill',
         description: 'Load and read a specific skill to guide your work. Skills contain proven workflows, mandatory processes, and expert techniques.',
         schema: z.object({
-          skill_name: z.string().describe('Name of the skill to load (e.g., "eazy:brainstorming" or "my-custom-skill")')
+          skill_name: z.string().describe('Name of the skill to load (e.g., "orbty-eazy:brainstorming" or "my-custom-skill")')
         }),
         execute: async ({ skill_name }) => {
-          // Resolve skill path (handles shadowing: personal > eazy)
+          // Resolve skill path (handles shadowing: personal > orbty-eazy)
           const resolved = skillsCore.resolveSkillPath(
             skill_name,
-            eazySkillsDir,
+            orbty-eazySkillsDir,
             personalSkillsDir
           );
 
@@ -574,13 +574,13 @@ ${content}`;
 
 **Step 2: Verify syntax**
 
-Run: `node -c .opencode/plugin/eazy.js`
+Run: `node -c .opencode/plugin/orbty-eazy.js`
 Expected: No output
 
 **Step 3: Commit**
 
 ```bash
-git add .opencode/plugin/eazy.js
+git add .opencode/plugin/orbty-eazy.js
 git commit -m "feat: implement use_skill tool for opencode"
 ```
 
@@ -589,7 +589,7 @@ git commit -m "feat: implement use_skill tool for opencode"
 ### Task 11: Implement find_skills Tool
 
 **Files:**
-- Modify: `.opencode/plugin/eazy.js`
+- Modify: `.opencode/plugin/orbty-eazy.js`
 
 **Step 1: Add find_skills tool to tools array**
 
@@ -598,13 +598,13 @@ Add after the use_skill tool definition, before closing the tools array:
 ```javascript
       {
         name: 'find_skills',
-        description: 'List all available skills in the eazy and personal skill libraries.',
+        description: 'List all available skills in the orbty-eazy and personal skill libraries.',
         schema: z.object({}),
         execute: async () => {
           // Find skills in both directories
-          const eazySkills = skillsCore.findSkillsInDir(
-            eazySkillsDir,
-            'eazy',
+          const orbty-eazySkills = skillsCore.findSkillsInDir(
+            orbty-eazySkillsDir,
+            'orbty-eazy',
             3
           );
           const personalSkills = skillsCore.findSkillsInDir(
@@ -614,16 +614,16 @@ Add after the use_skill tool definition, before closing the tools array:
           );
 
           // Combine and format skills list
-          const allSkills = [...personalSkills, ...eazySkills];
+          const allSkills = [...personalSkills, ...orbty-eazySkills];
 
           if (allSkills.length === 0) {
-            return 'No skills found. Install eazy skills to ~/.config/opencode/eazy/skills/';
+            return 'No skills found. Install orbty-eazy skills to ~/.config/opencode/orbty-eazy/skills/';
           }
 
           let output = 'Available skills:\n\n';
 
           for (const skill of allSkills) {
-            const namespace = skill.sourceType === 'personal' ? '' : 'eazy:';
+            const namespace = skill.sourceType === 'personal' ? '' : 'orbty-eazy:';
             const skillName = skill.name || path.basename(skill.path);
 
             output += `${namespace}${skillName}\n`;
@@ -640,13 +640,13 @@ Add after the use_skill tool definition, before closing the tools array:
 
 **Step 2: Verify syntax**
 
-Run: `node -c .opencode/plugin/eazy.js`
+Run: `node -c .opencode/plugin/orbty-eazy.js`
 Expected: No output
 
 **Step 3: Commit**
 
 ```bash
-git add .opencode/plugin/eazy.js
+git add .opencode/plugin/orbty-eazy.js
 git commit -m "feat: implement find_skills tool for opencode"
 ```
 
@@ -655,7 +655,7 @@ git commit -m "feat: implement find_skills tool for opencode"
 ### Task 12: Implement Session Start Hook
 
 **Files:**
-- Modify: `.opencode/plugin/eazy.js`
+- Modify: `.opencode/plugin/orbty-eazy.js`
 
 **Step 1: Add session.started hook**
 
@@ -663,10 +663,10 @@ After the tools array, add:
 
 ```javascript
     'session.started': async () => {
-      // Read using-eazy skill content
+      // Read using-orbty-eazy skill content
       const usingSuperpowersPath = skillsCore.resolveSkillPath(
-        'using-eazy',
-        eazySkillsDir,
+        'using-orbty-eazy',
+        orbty-eazySkillsDir,
         personalSkillsDir
       );
 
@@ -712,26 +712,26 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
 - Utilities and helpers specific to that skill
 
 **Skills naming:**
-- Superpowers skills: \`eazy:skill-name\` (from ~/.config/opencode/eazy/skills/)
+- Superpowers skills: \`orbty-eazy:skill-name\` (from ~/.config/opencode/orbty-eazy/skills/)
 - Personal skills: \`skill-name\` (from ~/.config/opencode/skills/)
-- Personal skills override eazy skills when names match
+- Personal skills override orbty-eazy skills when names match
 `;
 
       // Check for updates (non-blocking)
       const hasUpdates = skillsCore.checkForUpdates(
-        path.join(homeDir, '.config/opencode/eazy')
+        path.join(homeDir, '.config/opencode/orbty-eazy')
       );
 
       const updateNotice = hasUpdates ?
-        '\n\n⚠️ **Updates available!** Run `cd ~/.config/opencode/eazy && git pull` to update eazy.' :
+        '\n\n⚠️ **Updates available!** Run `cd ~/.config/opencode/orbty-eazy && git pull` to update orbty-eazy.' :
         '';
 
       // Return context to inject into session
       return {
         context: `<EXTREMELY_IMPORTANT>
-You have eazy.
+You have orbty-eazy.
 
-**Below is the full content of your 'eazy:using-eazy' skill - your introduction to using skills. For all other skills, use the 'use_skill' tool:**
+**Below is the full content of your 'orbty-eazy:using-orbty-eazy' skill - your introduction to using skills. For all other skills, use the 'use_skill' tool:**
 
 ${usingSuperpowersContent}
 
@@ -743,13 +743,13 @@ ${toolMapping}${updateNotice}
 
 **Step 2: Verify syntax**
 
-Run: `node -c .opencode/plugin/eazy.js`
+Run: `node -c .opencode/plugin/orbty-eazy.js`
 Expected: No output
 
 **Step 3: Commit**
 
 ```bash
-git add .opencode/plugin/eazy.js
+git add .opencode/plugin/orbty-eazy.js
 git commit -m "feat: implement session.started hook for opencode"
 ```
 
@@ -778,24 +778,24 @@ git commit -m "feat: implement session.started hook for opencode"
 ### 1. Install Superpowers Skills
 
 ```bash
-# Clone eazy skills to OpenCode config directory
-mkdir -p ~/.config/opencode/eazy
-git clone https://github.com/obra/eazy.git ~/.config/opencode/eazy
+# Clone orbty-eazy skills to OpenCode config directory
+mkdir -p ~/.config/opencode/orbty-eazy
+git clone https://github.com/obra/orbty-eazy.git ~/.config/opencode/orbty-eazy
 ```
 
 ### 2. Install the Plugin
 
-The plugin is included in the eazy repository you just cloned.
+The plugin is included in the orbty-eazy repository you just cloned.
 
 OpenCode will automatically discover it from:
-- `~/.config/opencode/eazy/.opencode/plugin/eazy.js`
+- `~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js`
 
 Or you can link it to the project-local plugin directory:
 
 ```bash
 # In your OpenCode project
 mkdir -p .opencode/plugin
-ln -s ~/.config/opencode/eazy/.opencode/plugin/eazy.js .opencode/plugin/eazy.js
+ln -s ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js .opencode/plugin/orbty-eazy.js
 ```
 
 ### 3. Restart OpenCode
@@ -803,7 +803,7 @@ ln -s ~/.config/opencode/eazy/.opencode/plugin/eazy.js .opencode/plugin/eazy.js
 Restart OpenCode to load the plugin. On the next session, you should see:
 
 ```
-You have eazy.
+You have orbty-eazy.
 ```
 
 ## Usage
@@ -821,7 +821,7 @@ use find_skills tool
 Use the `use_skill` tool to load a specific skill:
 
 ```
-use use_skill tool with skill_name: "eazy:brainstorming"
+use use_skill tool with skill_name: "orbty-eazy:brainstorming"
 ```
 
 ### Personal Skills
@@ -845,12 +845,12 @@ description: Use when [condition] - [what it does]
 [Your skill content here]
 ```
 
-Personal skills override eazy skills with the same name.
+Personal skills override orbty-eazy skills with the same name.
 
 ## Updating
 
 ```bash
-cd ~/.config/opencode/eazy
+cd ~/.config/opencode/orbty-eazy
 git pull
 ```
 
@@ -858,13 +858,13 @@ git pull
 
 ### Plugin not loading
 
-1. Check plugin file exists: `ls ~/.config/opencode/eazy/.opencode/plugin/eazy.js`
+1. Check plugin file exists: `ls ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js`
 2. Check OpenCode logs for errors
 3. Verify Node.js is installed: `node --version`
 
 ### Skills not found
 
-1. Verify skills directory exists: `ls ~/.config/opencode/eazy/skills`
+1. Verify skills directory exists: `ls ~/.config/opencode/orbty-eazy/skills`
 2. Use `find_skills` tool to see what's discovered
 3. Check file structure: each skill should have a `SKILL.md` file
 
@@ -878,8 +878,8 @@ When a skill references a Claude Code tool you don't have:
 
 ## Getting Help
 
-- Report issues: https://github.com/obra/eazy/issues
-- Documentation: https://github.com/obra/eazy
+- Report issues: https://github.com/obra/orbty-eazy/issues
+- Documentation: https://github.com/obra/orbty-eazy
 ```
 
 **Step 2: Verify file created**
@@ -982,21 +982,21 @@ git commit -m "docs: add opencode support to release notes"
 ### Task 16: Test Codex Still Works
 
 **Files:**
-- Test: `.codex/eazy-codex`
+- Test: `.codex/orbty-eazy-codex`
 
 **Step 1: Test find-skills command**
 
-Run: `.codex/eazy-codex find-skills | head -20`
+Run: `.codex/orbty-eazy-codex find-skills | head -20`
 Expected: Shows list of skills with names and descriptions
 
 **Step 2: Test use-skill command**
 
-Run: `.codex/eazy-codex use-skill eazy:brainstorming | head -20`
+Run: `.codex/orbty-eazy-codex use-skill orbty-eazy:brainstorming | head -20`
 Expected: Shows brainstorming skill content
 
 **Step 3: Test bootstrap command**
 
-Run: `.codex/eazy-codex bootstrap | head -30`
+Run: `.codex/orbty-eazy-codex bootstrap | head -30`
 Expected: Shows bootstrap content with instructions
 
 **Step 4: If all tests pass, record success**
@@ -1015,7 +1015,7 @@ No commit needed - this is verification only.
 Run:
 ```bash
 ls -l lib/skills-core.js
-ls -l .opencode/plugin/eazy.js
+ls -l .opencode/plugin/orbty-eazy.js
 ls -l .opencode/INSTALL.md
 ```
 
@@ -1029,7 +1029,7 @@ Expected:
 .opencode/
 ├── INSTALL.md
 └── plugin/
-    └── eazy.js
+    └── orbty-eazy.js
 ```
 
 **Step 3: If structure correct, proceed**
@@ -1057,8 +1057,8 @@ Expected: Shows all commits from this implementation
 
 Create a completion summary showing:
 - Total commits made
-- Files created: `lib/skills-core.js`, `.opencode/plugin/eazy.js`, `.opencode/INSTALL.md`
-- Files modified: `.codex/eazy-codex`, `README.md`, `RELEASE-NOTES.md`
+- Files created: `lib/skills-core.js`, `.opencode/plugin/orbty-eazy.js`, `.opencode/INSTALL.md`
+- Files modified: `.codex/orbty-eazy-codex`, `README.md`, `RELEASE-NOTES.md`
 - Testing performed: Codex commands verified
 - Ready for: Testing with actual OpenCode installation
 
@@ -1086,9 +1086,9 @@ These steps require OpenCode to be installed and are not part of the automated i
 ## Success Criteria
 
 - [ ] `lib/skills-core.js` created with all core functions
-- [ ] `.codex/eazy-codex` refactored to use shared core
+- [ ] `.codex/orbty-eazy-codex` refactored to use shared core
 - [ ] Codex commands still work (find-skills, use-skill, bootstrap)
-- [ ] `.opencode/plugin/eazy.js` created with tools and hooks
+- [ ] `.opencode/plugin/orbty-eazy.js` created with tools and hooks
 - [ ] Installation guide created
 - [ ] README and RELEASE-NOTES updated
 - [ ] All changes committed

@@ -6,11 +6,11 @@
 
 ## Overview
 
-Add full eazy support for OpenCode.ai using a native OpenCode plugin architecture that shares core functionality with the existing Codex implementation.
+Add full orbty-eazy support for OpenCode.ai using a native OpenCode plugin architecture that shares core functionality with the existing Codex implementation.
 
 ## Background
 
-OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempts to port eazy to OpenCode (PR #93, PR #116) used file-copying approaches. This design takes a different approach: building a native OpenCode plugin using their JavaScript/TypeScript plugin system while sharing code with the Codex implementation.
+OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempts to port orbty-eazy to OpenCode (PR #93, PR #116) used file-copying approaches. This design takes a different approach: building a native OpenCode plugin using their JavaScript/TypeScript plugin system while sharing code with the Codex implementation.
 
 ### Key Differences Between Platforms
 
@@ -34,16 +34,16 @@ OpenCode.ai is a coding agent similar to Claude Code and Codex. Previous attempt
    - Used by both Codex and OpenCode implementations
 
 2. **Platform-Specific Wrappers**
-   - Codex: CLI script (`.codex/eazy-codex`)
-   - OpenCode: Plugin module (`.opencode/plugin/eazy.js`)
+   - Codex: CLI script (`.codex/orbty-eazy-codex`)
+   - OpenCode: Plugin module (`.opencode/plugin/orbty-eazy.js`)
 
 3. **Skill Directories**
-   - Core: `~/.config/opencode/eazy/skills/` (or installed location)
+   - Core: `~/.config/opencode/orbty-eazy/skills/` (or installed location)
    - Personal: `~/.config/opencode/skills/` (shadows core skills)
 
 ### Code Reuse Strategy
 
-Extract common functionality from `.codex/eazy-codex` into shared module:
+Extract common functionality from `.codex/orbty-eazy-codex` into shared module:
 
 ```javascript
 // lib/skills-core.js
@@ -80,7 +80,7 @@ Loads a specific skill's content into the conversation (equivalent to Claude's S
   name: 'use_skill',
   description: 'Load and read a specific skill to guide your work',
   schema: z.object({
-    skill_name: z.string().describe('Name of skill (e.g., "eazy:brainstorming")')
+    skill_name: z.string().describe('Name of skill (e.g., "orbty-eazy:brainstorming")')
   }),
   execute: async ({ skill_name }) => {
     const { skillPath, content, frontmatter } = resolveAndReadSkill(skill_name);
@@ -120,8 +120,8 @@ Lists all available skills with metadata.
 
 When a new session starts (`session.started` event):
 
-1. **Inject using-eazy content**
-   - Full content of the using-eazy skill
+1. **Inject using-orbty-eazy content**
+   - Full content of the using-orbty-eazy skill
    - Establishes mandatory workflows
 
 2. **Run find_skills automatically**
@@ -150,19 +150,19 @@ When a new session starts (`session.started` event):
 ### Plugin Structure
 
 ```javascript
-// .opencode/plugin/eazy.js
+// .opencode/plugin/orbty-eazy.js
 const skillsCore = require('../../lib/skills-core');
 const path = require('path');
 const fs = require('fs');
 const { z } = require('zod');
 
 export const SuperpowersPlugin = async ({ client, directory, $ }) => {
-  const eazyDir = path.join(process.env.HOME, '.config/opencode/eazy');
+  const orbty-eazyDir = path.join(process.env.HOME, '.config/opencode/orbty-eazy');
   const personalDir = path.join(process.env.HOME, '.config/opencode/skills');
 
   return {
     'session.started': async () => {
-      const usingSuperpowers = await readSkill('using-eazy');
+      const usingSuperpowers = await readSkill('using-orbty-eazy');
       const skillsList = await findAllSkills();
       const toolMapping = getToolMappingInstructions();
 
@@ -198,16 +198,16 @@ export const SuperpowersPlugin = async ({ client, directory, $ }) => {
 ## File Structure
 
 ```
-eazy/
+orbty-eazy/
 ├── lib/
 │   └── skills-core.js           # NEW: Shared skill logic
 ├── .codex/
-│   ├── eazy-codex        # UPDATED: Use skills-core
-│   ├── eazy-bootstrap.md
+│   ├── orbty-eazy-codex        # UPDATED: Use skills-core
+│   ├── orbty-eazy-bootstrap.md
 │   └── INSTALL.md
 ├── .opencode/
 │   ├── plugin/
-│   │   └── eazy.js       # NEW: OpenCode plugin
+│   │   └── orbty-eazy.js       # NEW: OpenCode plugin
 │   └── INSTALL.md               # NEW: Installation guide
 └── skills/                       # Unchanged
 ```
@@ -217,12 +217,12 @@ eazy/
 ### Phase 1: Refactor Shared Core
 
 1. Create `lib/skills-core.js`
-   - Extract frontmatter parsing from `.codex/eazy-codex`
+   - Extract frontmatter parsing from `.codex/orbty-eazy-codex`
    - Extract skill discovery logic
    - Extract path resolution (with shadowing)
    - Update to use only `name` and `description` (no `when_to_use`)
 
-2. Update `.codex/eazy-codex` to use shared core
+2. Update `.codex/orbty-eazy-codex` to use shared core
    - Import from `../lib/skills-core.js`
    - Remove duplicated code
    - Keep CLI wrapper logic
@@ -234,7 +234,7 @@ eazy/
 
 ### Phase 2: Build OpenCode Plugin
 
-1. Create `.opencode/plugin/eazy.js`
+1. Create `.opencode/plugin/orbty-eazy.js`
    - Import shared core from `../../lib/skills-core.js`
    - Implement plugin function
    - Define custom tools (use_skill, find_skills)

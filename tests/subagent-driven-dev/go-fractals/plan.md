@@ -1,6 +1,6 @@
 # Go Fractals CLI - Implementation Plan
 
-Execute this plan using the `eazy:subagent-driven-development` skill.
+Execute this plan using the `orbty-eazy:subagent-driven-development` skill.
 
 ## Context
 
@@ -13,7 +13,7 @@ Building a CLI tool that generates ASCII fractals. See `design.md` for full spec
 Create the Go module and directory structure.
 
 **Do:**
-- Initialize `go.mod` with module name `github.com/eazy-test/fractals`
+- Initialize `go.mod` with module name `github.com/orbty-eazy-test/fractals`
 - Create directory structure: `cmd/fractals/`, `internal/sierpinski/`, `internal/mandelbrot/`, `internal/cli/`
 - Create minimal `cmd/fractals/main.go` that prints "fractals cli"
 - Add `github.com/spf13/cobra` dependency

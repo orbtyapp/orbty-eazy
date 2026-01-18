@@ -7,7 +7,7 @@ Complete guide for using Superpowers with [OpenCode.ai](https://opencode.ai).
 Tell OpenCode:
 
 ```
-Clone https://github.com/obra/eazy to ~/.config/opencode/eazy, then create directory ~/.config/opencode/plugin, then symlink ~/.config/opencode/eazy/.opencode/plugin/eazy.js to ~/.config/opencode/plugin/eazy.js, then restart opencode.
+Clone https://github.com/obra/orbty-eazy to ~/.config/opencode/orbty-eazy, then create directory ~/.config/opencode/plugin, then symlink ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js to ~/.config/opencode/plugin/orbty-eazy.js, then restart opencode.
 ```
 
 ## Manual Installation
@@ -23,8 +23,8 @@ Clone https://github.com/obra/eazy to ~/.config/opencode/eazy, then create direc
 #### 1. Install Superpowers
 
 ```bash
-mkdir -p ~/.config/opencode/eazy
-git clone https://github.com/obra/eazy.git ~/.config/opencode/eazy
+mkdir -p ~/.config/opencode/orbty-eazy
+git clone https://github.com/obra/orbty-eazy.git ~/.config/opencode/orbty-eazy
 ```
 
 #### 2. Register the Plugin
@@ -33,7 +33,7 @@ OpenCode discovers plugins from `~/.config/opencode/plugin/`. Create a symlink:
 
 ```bash
 mkdir -p ~/.config/opencode/plugin
-ln -sf ~/.config/opencode/eazy/.opencode/plugin/eazy.js ~/.config/opencode/plugin/eazy.js
+ln -sf ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js ~/.config/opencode/plugin/orbty-eazy.js
 ```
 
 Alternatively, for project-local installation:
@@ -41,7 +41,7 @@ Alternatively, for project-local installation:
 ```bash
 # In your OpenCode project
 mkdir -p .opencode/plugin
-ln -sf ~/.config/opencode/eazy/.opencode/plugin/eazy.js .opencode/plugin/eazy.js
+ln -sf ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js .opencode/plugin/orbty-eazy.js
 ```
 
 #### 3. Restart OpenCode
@@ -63,7 +63,7 @@ use find_skills tool
 Use the `use_skill` tool to load a specific skill:
 
 ```
-use use_skill tool with skill_name: "eazy:brainstorming"
+use use_skill tool with skill_name: "orbty-eazy:brainstorming"
 ```
 
 Skills are automatically inserted into the conversation and persist across context compaction.
@@ -117,18 +117,18 @@ Skills are resolved with this priority order:
 
 1. **Project skills** (`.opencode/skills/`) - Highest priority
 2. **Personal skills** (`~/.config/opencode/skills/`)
-3. **Superpowers skills** (`~/.config/opencode/eazy/skills/`)
+3. **Superpowers skills** (`~/.config/opencode/orbty-eazy/skills/`)
 
 You can force resolution to a specific level:
 - `project:skill-name` - Force project skill
-- `skill-name` - Search project → personal → eazy
-- `eazy:skill-name` - Force eazy skill
+- `skill-name` - Search project → personal → orbty-eazy
+- `orbty-eazy:skill-name` - Force orbty-eazy skill
 
 ## Features
 
 ### Automatic Context Injection
 
-The plugin automatically injects eazy context via the chat.message hook on every session. No manual configuration needed.
+The plugin automatically injects orbty-eazy context via the chat.message hook on every session. No manual configuration needed.
 
 ### Message Insertion Pattern
 
@@ -136,7 +136,7 @@ When you load a skill with `use_skill`, it's inserted as a user message with `no
 
 ### Compaction Resilience
 
-The plugin listens for `session.compacted` events and automatically re-injects the core eazy bootstrap to maintain functionality after context compaction.
+The plugin listens for `session.compacted` events and automatically re-injects the core orbty-eazy bootstrap to maintain functionality after context compaction.
 
 ### Tool Mapping
 
@@ -151,7 +151,7 @@ Skills written for Claude Code are automatically adapted for OpenCode. The plugi
 
 ### Plugin Structure
 
-**Location:** `~/.config/opencode/eazy/.opencode/plugin/eazy.js`
+**Location:** `~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js`
 
 **Components:**
 - Two custom tools: `use_skill`, `find_skills`
@@ -161,7 +161,7 @@ Skills written for Claude Code are automatically adapted for OpenCode. The plugi
 
 ### Shared Core Module
 
-**Location:** `~/.config/opencode/eazy/lib/skills-core.js`
+**Location:** `~/.config/opencode/orbty-eazy/lib/skills-core.js`
 
 **Functions:**
 - `extractFrontmatter()` - Parse skill metadata
@@ -175,7 +175,7 @@ This module is shared between OpenCode and Codex implementations for code reuse.
 ## Updating
 
 ```bash
-cd ~/.config/opencode/eazy
+cd ~/.config/opencode/orbty-eazy
 git pull
 ```
 
@@ -185,14 +185,14 @@ Restart OpenCode to load the updates.
 
 ### Plugin not loading
 
-1. Check plugin file exists: `ls ~/.config/opencode/eazy/.opencode/plugin/eazy.js`
-2. Check symlink: `ls -l ~/.config/opencode/plugin/eazy.js`
+1. Check plugin file exists: `ls ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js`
+2. Check symlink: `ls -l ~/.config/opencode/plugin/orbty-eazy.js`
 3. Check OpenCode logs: `opencode run "test" --print-logs --log-level DEBUG`
-4. Look for: `service=plugin path=file:///.../eazy.js loading plugin`
+4. Look for: `service=plugin path=file:///.../orbty-eazy.js loading plugin`
 
 ### Skills not found
 
-1. Verify skills directory: `ls ~/.config/opencode/eazy/skills`
+1. Verify skills directory: `ls ~/.config/opencode/orbty-eazy/skills`
 2. Use `find_skills` tool to see what's discovered
 3. Check skill structure: each skill needs a `SKILL.md` file
 
@@ -200,18 +200,18 @@ Restart OpenCode to load the updates.
 
 1. Verify plugin loaded: Check OpenCode logs for plugin loading message
 2. Check Node.js version: The plugin requires Node.js for ES modules
-3. Test plugin manually: `node --input-type=module -e "import('file://~/.config/opencode/plugin/eazy.js').then(m => console.log(Object.keys(m)))"`
+3. Test plugin manually: `node --input-type=module -e "import('file://~/.config/opencode/plugin/orbty-eazy.js').then(m => console.log(Object.keys(m)))"`
 
 ### Context not injecting
 
 1. Check if chat.message hook is working
-2. Verify using-eazy skill exists
+2. Verify using-orbty-eazy skill exists
 3. Check OpenCode version (requires recent version with plugin support)
 
 ## Getting Help
 
-- Report issues: https://github.com/obra/eazy/issues
-- Main documentation: https://github.com/obra/eazy
+- Report issues: https://github.com/obra/orbty-eazy/issues
+- Main documentation: https://github.com/obra/orbty-eazy
 - OpenCode docs: https://opencode.ai/docs/
 
 ## Testing

@@ -41,8 +41,8 @@ Start by understanding the current project context, then ask questions one at a 
 
 **Implementation (if continuing):**
 - Ask: "Ready to set up for implementation?"
-- Use eazy:using-git-worktrees to create isolated workspace
-- Use eazy:writing-plans to create detailed implementation plan
+- Use orbty-eazy:using-git-worktrees to create isolated workspace
+- Use orbty-eazy:writing-plans to create detailed implementation plan
 
 ## Key Principles
 
