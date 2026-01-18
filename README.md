@@ -33,13 +33,13 @@ Thanks!
 In Claude Code, register the marketplace first:
 
 ```bash
-/plugin marketplace add obra/superpowers-marketplace
+/plugin marketplace add obra/eazy-marketplace
 ```
 
 Then install the plugin from this marketplace:
 
 ```bash
-/plugin install superpowers@superpowers-marketplace
+/plugin install eazy@eazy-marketplace
 ```
 
 ### Verify Installation
@@ -52,9 +52,9 @@ Check that commands appear:
 
 ```
 # Should see:
-# /superpowers:brainstorm - Interactive design refinement
-# /superpowers:write-plan - Create implementation plan
-# /superpowers:execute-plan - Execute plan in batches
+# /eazy:brainstorm - Interactive design refinement
+# /eazy:write-plan - Create implementation plan
+# /eazy:execute-plan - Execute plan in batches
 ```
 
 ### Codex
@@ -62,7 +62,7 @@ Check that commands appear:
 Tell Codex:
 
 ```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.codex/INSTALL.md
+Fetch and follow instructions from https://raw.githubusercontent.com/obra/eazy/refs/heads/main/.codex/INSTALL.md
 ```
 
 **Detailed docs:** [docs/README.codex.md](docs/README.codex.md)
@@ -72,7 +72,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 Tell OpenCode:
 
 ```
-Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+Fetch and follow instructions from https://raw.githubusercontent.com/obra/eazy/refs/heads/main/.opencode/INSTALL.md
 ```
 
 **Detailed docs:** [docs/README.opencode.md](docs/README.opencode.md)
@@ -119,7 +119,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 
 **Meta**
 - **writing-skills** - Create new skills following best practices (includes testing methodology)
-- **using-superpowers** - Introduction to the skills system
+- **using-eazy** - Introduction to the skills system
 
 ## Philosophy
 
@@ -128,7 +128,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/superp
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success
 
-Read more: [Superpowers for Claude Code](https://blog.fsck.com/2025/10/09/superpowers/)
+Read more: [Superpowers for Claude Code](https://blog.fsck.com/2025/10/09/eazy/)
 
 ## Contributing
 
@@ -146,7 +146,7 @@ See `skills/writing-skills/SKILL.md` for the complete guide.
 Skills update automatically when you update the plugin:
 
 ```bash
-/plugin update superpowers
+/plugin update eazy
 ```
 
 ## License
@@ -155,5 +155,5 @@ MIT License - see LICENSE file for details
 
 ## Support
 
-- **Issues**: https://github.com/obra/superpowers/issues
-- **Marketplace**: https://github.com/obra/superpowers-marketplace
+- **Issues**: https://github.com/obra/eazy/issues
+- **Marketplace**: https://github.com/obra/eazy-marketplace
