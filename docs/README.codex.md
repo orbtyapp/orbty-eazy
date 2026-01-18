@@ -1,6 +1,6 @@
-# Superpowers for Codex
+# Orbty-eazy for Codex
 
-Complete guide for using Superpowers with OpenAI Codex.
+Complete guide for using Orbty-eazy with OpenAI Codex.
 
 ## Quick Install
 
@@ -19,7 +19,7 @@ Fetch and follow instructions from https://raw.githubusercontent.com/obra/orbty-
 
 ### Installation Steps
 
-#### 1. Clone Superpowers
+#### 1. Clone Orbty-eazy
 
 ```bash
 mkdir -p ~/.codex/orbty-eazy
@@ -92,6 +92,7 @@ Personal skills override orbty-eazy skills with the same name.
 **Location:** `~/.codex/orbty-eazy/.codex/orbty-eazy-codex`
 
 A Node.js CLI script that provides three commands:
+
 - `bootstrap` - Load complete bootstrap with all skills
 - `use-skill <name>` - Load a specific skill
 - `find-skills` - List all available skills

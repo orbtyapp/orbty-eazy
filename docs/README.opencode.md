@@ -1,6 +1,6 @@
-# Superpowers for OpenCode
+# Orbty-eazy for OpenCode
 
-Complete guide for using Superpowers with [OpenCode.ai](https://opencode.ai).
+Complete guide for using Orbty-eazy with [OpenCode.ai](https://opencode.ai).
 
 ## Quick Install
 
@@ -20,7 +20,7 @@ Clone https://github.com/obra/orbty-eazy to ~/.config/opencode/orbty-eazy, then 
 
 ### Installation Steps
 
-#### 1. Install Superpowers
+#### 1. Install Orbty-eazy
 
 ```bash
 mkdir -p ~/.config/opencode/orbty-eazy
@@ -46,7 +46,7 @@ ln -sf ~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js .opencode/pl
 
 #### 3. Restart OpenCode
 
-Restart OpenCode to load the plugin. Superpowers will automatically activate.
+Restart OpenCode to load the plugin. Orbty-eazy will automatically activate.
 
 ## Usage
 
@@ -117,9 +117,10 @@ Skills are resolved with this priority order:
 
 1. **Project skills** (`.opencode/skills/`) - Highest priority
 2. **Personal skills** (`~/.config/opencode/skills/`)
-3. **Superpowers skills** (`~/.config/opencode/orbty-eazy/skills/`)
+3. **Orbty-eazy skills** (`~/.config/opencode/orbty-eazy/skills/`)
 
 You can force resolution to a specific level:
+
 - `project:skill-name` - Force project skill
 - `skill-name` - Search project → personal → orbty-eazy
 - `orbty-eazy:skill-name` - Force orbty-eazy skill
@@ -154,6 +155,7 @@ Skills written for Claude Code are automatically adapted for OpenCode. The plugi
 **Location:** `~/.config/opencode/orbty-eazy/.opencode/plugin/orbty-eazy.js`
 
 **Components:**
+
 - Two custom tools: `use_skill`, `find_skills`
 - chat.message hook for initial context injection
 - event handler for session.compacted re-injection
@@ -164,6 +166,7 @@ Skills written for Claude Code are automatically adapted for OpenCode. The plugi
 **Location:** `~/.config/opencode/orbty-eazy/lib/skills-core.js`
 
 **Functions:**
+
 - `extractFrontmatter()` - Parse skill metadata
 - `stripFrontmatter()` - Remove metadata from content
 - `findSkillsInDir()` - Recursive skill discovery
@@ -227,6 +230,7 @@ The implementation includes an automated test suite at `tests/opencode/`:
 ```
 
 Tests verify:
+
 - Plugin loading
 - Skills-core library functionality
 - Tool execution (use_skill, find_skills)

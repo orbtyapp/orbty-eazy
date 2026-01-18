@@ -1,5 +1,5 @@
 /**
- * Superpowers plugin for OpenCode.ai
+ * Orbty-eazy plugin for OpenCode.ai
  *
  * Provides custom tools for loading and discovering skills,
  * with prompt generation for agent configuration.
@@ -43,7 +43,7 @@ When skills reference tools you don't have, substitute OpenCode equivalents:
 **Skills naming (priority order):**
 - Project skills: \`project:skill-name\` (in .opencode/skills/)
 - Personal skills: \`skill-name\` (in ~/.config/opencode/skills/)
-- Superpowers skills: \`orbty-eazy:skill-name\`
+- Orbty-eazy skills: \`orbty-eazy:skill-name\`
 - Project skills override personal, which override orbty-eazy when names match`;
 
     return `<EXTREMELY_IMPORTANT>

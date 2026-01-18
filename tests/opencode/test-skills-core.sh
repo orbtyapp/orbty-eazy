@@ -249,10 +249,10 @@ fi
 echo ""
 echo "Test 4: Testing resolveSkillPath..."
 
-# Create skills in personal and superpowers locations for testing
+# Create skills in personal and orbty-eazy locations for testing
 mkdir -p "$TEST_HOME/personal-skills/shared-skill"
-mkdir -p "$TEST_HOME/superpowers-skills/shared-skill"
-mkdir -p "$TEST_HOME/superpowers-skills/unique-skill"
+mkdir -p "$TEST_HOME/orbty-eazy-skills/shared-skill"
+mkdir -p "$TEST_HOME/orbty-eazy-skills/unique-skill"
 
 cat > "$TEST_HOME/personal-skills/shared-skill/SKILL.md" <<'EOF'
 ---
@@ -262,18 +262,18 @@ description: Personal version
 # Personal Shared
 EOF
 
-cat > "$TEST_HOME/superpowers-skills/shared-skill/SKILL.md" <<'EOF'
+cat > "$TEST_HOME/orbty-eazy-skills/shared-skill/SKILL.md" <<'EOF'
 ---
 name: shared-skill
-description: Superpowers version
+description: Orbty-eazy version
 ---
-# Superpowers Shared
+# Orbty-eazy Shared
 EOF
 
-cat > "$TEST_HOME/superpowers-skills/unique-skill/SKILL.md" <<'EOF'
+cat > "$TEST_HOME/orbty-eazy-skills/unique-skill/SKILL.md" <<'EOF'
 ---
 name: unique-skill
-description: Only in superpowers
+description: Only in orbty-eazy
 ---
 # Unique
 EOF
@@ -283,8 +283,8 @@ const fs = require('fs');
 const path = require('path');
 
 function resolveSkillPath(skillName, superpowersDir, personalDir) {
-    const forceSuperpowers = skillName.startsWith('superpowers:');
-    const actualSkillName = forceSuperpowers ? skillName.replace(/^superpowers:/, '') : skillName;
+    const forceSuperpowers = skillName.startsWith('orbty-eazy:');
+    const actualSkillName = forceSuperpowers ? skillName.replace(/^orbty-eazy:/, '') : skillName;
 
     if (!forceSuperpowers && personalDir) {
         const personalPath = path.join(personalDir, actualSkillName);
@@ -304,7 +304,7 @@ function resolveSkillPath(skillName, superpowersDir, personalDir) {
         if (fs.existsSync(superpowersSkillFile)) {
             return {
                 skillFile: superpowersSkillFile,
-                sourceType: 'superpowers',
+                sourceType: 'orbty-eazy',
                 skillPath: actualSkillName
             };
         }
@@ -313,18 +313,18 @@ function resolveSkillPath(skillName, superpowersDir, personalDir) {
     return null;
 }
 
-const superpowersDir = '$TEST_HOME/superpowers-skills';
+const superpowersDir = '$TEST_HOME/orbty-eazy-skills';
 const personalDir = '$TEST_HOME/personal-skills';
 
 // Test 1: Shared skill should resolve to personal
 const shared = resolveSkillPath('shared-skill', superpowersDir, personalDir);
 console.log('SHARED:', JSON.stringify(shared));
 
-// Test 2: superpowers: prefix should force superpowers
-const forced = resolveSkillPath('superpowers:shared-skill', superpowersDir, personalDir);
+// Test 2: orbty-eazy: prefix should force orbty-eazy
+const forced = resolveSkillPath('orbty-eazy:shared-skill', superpowersDir, personalDir);
 console.log('FORCED:', JSON.stringify(forced));
 
-// Test 3: Unique skill should resolve to superpowers
+// Test 3: Unique skill should resolve to orbty-eazy
 const unique = resolveSkillPath('unique-skill', superpowersDir, personalDir);
 console.log('UNIQUE:', JSON.stringify(unique));
 
@@ -334,24 +334,24 @@ console.log('NOTFOUND:', JSON.stringify(notfound));
 " 2>&1)
 
 if echo "$result" | grep -q 'SHARED:.*"sourceType":"personal"'; then
-    echo "  [PASS] Personal skills shadow superpowers skills"
+    echo "  [PASS] Personal skills shadow orbty-eazy skills"
 else
     echo "  [FAIL] Personal skills not shadowing correctly"
     echo "  Result: $result"
     exit 1
 fi
 
-if echo "$result" | grep -q 'FORCED:.*"sourceType":"superpowers"'; then
-    echo "  [PASS] superpowers: prefix forces superpowers resolution"
+if echo "$result" | grep -q 'FORCED:.*"sourceType":"orbty-eazy"'; then
+    echo "  [PASS] orbty-eazy: prefix forces orbty-eazy resolution"
 else
-    echo "  [FAIL] superpowers: prefix not working"
+    echo "  [FAIL] orbty-eazy: prefix not working"
     exit 1
 fi
 
-if echo "$result" | grep -q 'UNIQUE:.*"sourceType":"superpowers"'; then
-    echo "  [PASS] Unique superpowers skills are found"
+if echo "$result" | grep -q 'UNIQUE:.*"sourceType":"orbty-eazy"'; then
+    echo "  [PASS] Unique orbty-eazy skills are found"
 else
-    echo "  [FAIL] Unique superpowers skills not found"
+    echo "  [FAIL] Unique orbty-eazy skills not found"
     exit 1
 fi
 

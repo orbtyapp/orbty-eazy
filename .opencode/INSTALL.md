@@ -1,4 +1,4 @@
-# Installing Superpowers for OpenCode
+# Installing Orbty-eazy for OpenCode
 
 ## Prerequisites
 
@@ -8,7 +8,7 @@
 
 ## Installation Steps
 
-### 1. Install Superpowers
+### 1. Install Orbty-eazy
 
 ```bash
 mkdir -p ~/.config/opencode/orbty-eazy
@@ -96,6 +96,7 @@ description: Use when [condition] - [what it does]
 **Skill Priority:** Project skills override personal skills, which override orbty-eazy skills.
 
 **Skill Naming:**
+
 - `project:skill-name` - Force project skill lookup
 - `skill-name` - Searches project → personal → orbty-eazy
 - `orbty-eazy:skill-name` - Force orbty-eazy skill lookup
@@ -124,6 +125,7 @@ git pull
 ### Tool mapping issues
 
 When a skill references a Claude Code tool you don't have:
+
 - `TodoWrite` → use `update_plan`
 - `Task` with subagents → use `@mention` syntax to invoke OpenCode subagents
 - `Skill` → use `use_skill` tool

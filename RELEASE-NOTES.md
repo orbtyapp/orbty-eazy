@@ -1,4 +1,4 @@
-# Superpowers Release Notes
+# Orbty-eazy Release Notes
 
 ## v4.0.3 (2025-12-26)
 
@@ -9,6 +9,7 @@
 Addressed a failure mode where Claude would skip invoking a skill even when the user explicitly requested it by name (e.g., "subagent-driven-development, please"). Claude would think "I know what that means" and start working directly instead of loading the skill.
 
 Changes:
+
 - Updated "The Rule" to say "Invoke relevant or requested skills" instead of "Check for skills" - emphasizing active invocation over passive checking
 - Added "BEFORE any response or action" - the original wording only mentioned "response" but Claude would sometimes take action without responding first
 - Added reassurance that invoking a wrong skill is okay - reduces hesitation
@@ -63,12 +64,14 @@ Subagent workflows now use two separate review stages after each task:
 This catches the common failure mode where code is well-written but doesn't match what was requested. Reviews are loops, not one-shot: if reviewer finds issues, implementer fixes them, then reviewer checks again.
 
 Other subagent workflow improvements:
+
 - Controller provides full task text to workers (not file references)
 - Workers can ask clarifying questions before AND during work
 - Self-review checklist before reporting completion
 - Plan read once at start, extracted to TodoWrite
 
 New prompt templates in `skills/subagent-driven-development/`:
+
 - `implementer-prompt.md` - Includes self-review checklist, encourages questions
 - `spec-reviewer-prompt.md` - Skeptical verification against requirements
 - `code-quality-reviewer-prompt.md` - Standard code review
@@ -76,6 +79,7 @@ New prompt templates in `skills/subagent-driven-development/`:
 **Debugging techniques consolidated with tools**
 
 `systematic-debugging` now bundles supporting techniques and tools:
+
 - `root-cause-tracing.md` - Trace bugs backward through call stack
 - `defense-in-depth.md` - Add validation at multiple layers
 - `condition-based-waiting.md` - Replace arbitrary timeouts with condition polling
@@ -85,6 +89,7 @@ New prompt templates in `skills/subagent-driven-development/`:
 **Testing anti-patterns reference**
 
 `test-driven-development` now includes `testing-anti-patterns.md` covering:
+
 - Testing mock behavior instead of real behavior
 - Adding test-only methods to production classes
 - Mocking without understanding dependencies
@@ -99,6 +104,7 @@ Three new test frameworks for validating skill behavior:
 `tests/claude-code/` - Integration tests using `claude -p` for headless testing. Verifies skill usage via session transcript (JSONL) analysis. Includes `analyze-token-usage.py` for cost tracking.
 
 `tests/subagent-driven-dev/` - End-to-end workflow validation with two complete test projects:
+
 - `go-fractals/` - CLI tool with Sierpinski/Mandelbrot (10 tasks)
 - `svelte-todo/` - CRUD app with localStorage and Playwright (12 tasks)
 
@@ -121,6 +127,7 @@ Description changed to imperative: "You MUST use this before any creative workâ€
 ### Breaking Changes
 
 **Skill consolidation** - Six standalone skills merged:
+
 - `root-cause-tracing`, `defense-in-depth`, `condition-based-waiting` â†’ bundled in `systematic-debugging/`
 - `testing-skills-with-subagents` â†’ bundled in `writing-skills/`
 - `testing-anti-patterns` â†’ bundled in `test-driven-development/`
@@ -215,6 +222,7 @@ Description changed to imperative: "You MUST use this before any creative workâ€
 ### New Features
 
 **Experimental Codex Support**
+
 - Added unified `orbty-eazy-codex` script with bootstrap/use-skill/find-skills commands
 - Cross-platform Node.js implementation (works on Windows, macOS, Linux)
 - Namespaced skills: `orbty-eazy:skill-name` for orbty-eazy skills, `skill-name` for personal
@@ -226,12 +234,14 @@ Description changed to imperative: "You MUST use this before any creative workâ€
 - Complete installation guide and bootstrap instructions specific to Codex
 
 **Key differences from Claude Code integration:**
+
 - Single unified script instead of separate tools
 - Tool substitution system for Codex-specific equivalents
 - Simplified subagent handling (manual work instead of delegation)
-- Updated terminology: "Superpowers skills" instead of "Core skills"
+- Updated terminology: "Orbty-eazy skills" instead of "Core skills"
 
 ### Files Added
+
 - `.codex/INSTALL.md` - Installation guide for Codex users
 - `.codex/orbty-eazy-bootstrap.md` - Bootstrap instructions with Codex adaptations
 - `.codex/orbty-eazy-codex` - Unified Node.js executable with all functionality
@@ -243,6 +253,7 @@ Description changed to imperative: "You MUST use this before any creative workâ€
 ### Improvements
 
 **Updated using-orbty-eazy skill to use Skill tool instead of Read tool**
+
 - Changed skill invocation instructions from Read tool to Skill tool
 - Updated description: "using Read tool" â†’ "using Skill tool"
 - Updated step 3: "Use the Read tool" â†’ "Use the Skill tool to read and run"
@@ -251,6 +262,7 @@ Description changed to imperative: "You MUST use this before any creative workâ€
 The Skill tool is the proper mechanism for invoking skills in Claude Code. This update corrects the bootstrap instructions to guide agents toward the correct tool.
 
 ### Files Changed
+
 - Updated: `skills/using-orbty-eazy/SKILL.md` - Changed tool references from Read to Skill
 
 ## v3.2.2 (2025-10-21)
@@ -258,6 +270,7 @@ The Skill tool is the proper mechanism for invoking skills in Claude Code. This 
 ### Improvements
 
 **Strengthened using-orbty-eazy skill against agent rationalization**
+
 - Added EXTREMELY-IMPORTANT block with absolute language about mandatory skill checking
   - "If even 1% chance a skill applies, you MUST read it"
   - "You do not have a choice. You cannot rationalize your way out."
@@ -273,6 +286,7 @@ The Skill tool is the proper mechanism for invoking skills in Claude Code. This 
 These changes address observed agent behavior where they rationalize around skill usage despite clear instructions. The forceful language and pre-emptive counter-arguments aim to make non-compliance harder.
 
 ### Files Changed
+
 - Updated: `skills/using-orbty-eazy/SKILL.md` - Added three layers of enforcement to prevent skill-skipping rationalization
 
 ## v3.2.1 (2025-10-20)
@@ -280,6 +294,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### New Features
 
 **Code reviewer agent now included in plugin**
+
 - Added `orbty-eazy:code-reviewer` agent to plugin's `agents/` directory
 - Agent provides systematic code review against plans and coding standards
 - Previously required users to have personal agent configuration
@@ -287,6 +302,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Fixes #55
 
 ### Files Changed
+
 - New: `agents/code-reviewer.md` - Agent definition with review checklist and output format
 - Updated: `skills/requesting-code-review/SKILL.md` - References to `orbty-eazy:code-reviewer`
 - Updated: `skills/subagent-driven-development/SKILL.md` - References to `orbty-eazy:code-reviewer`
@@ -296,6 +312,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### New Features
 
 **Design documentation in brainstorming workflow**
+
 - Added Phase 4: Design Documentation to brainstorming skill
 - Design documents now written to `docs/plans/YYYY-MM-DD-<topic>-design.md` before implementation
 - Restores functionality from original brainstorming command that was lost during skill conversion
@@ -305,6 +322,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### Breaking Changes
 
 **Skill reference namespace standardization**
+
 - All internal skill references now use `orbty-eazy:` namespace prefix
 - Updated format: `orbty-eazy:test-driven-development` (previously just `test-driven-development`)
 - Affects all REQUIRED SUB-SKILL, RECOMMENDED SUB-SKILL, and REQUIRED BACKGROUND references
@@ -314,6 +332,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### Improvements
 
 **Design vs implementation plan naming**
+
 - Design documents use `-design.md` suffix to prevent filename collisions
 - Implementation plans continue using existing `YYYY-MM-DD-<feature-name>.md` format
 - Both stored in `docs/plans/` directory with clear naming distinction
@@ -329,6 +348,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### Breaking Changes
 
 **Skill names standardized to lowercase**
+
 - All skill frontmatter `name:` fields now use lowercase kebab-case matching directory names
 - Examples: `brainstorming`, `test-driven-development`, `using-git-worktrees`
 - All skill announcements and cross-references updated to lowercase format
@@ -337,6 +357,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### New Features
 
 **Enhanced brainstorming skill**
+
 - Added Quick Reference table showing phases, activities, and tool usage
 - Added copyable workflow checklist for tracking progress
 - Added decision flowchart for when to revisit earlier phases
@@ -345,6 +366,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Restructured Key Principles as scannable table
 
 **Anthropic best practices integration**
+
 - Added `skills/writing-skills/anthropic-best-practices.md` - Official Anthropic skill authoring guide
 - Referenced in writing-skills SKILL.md for comprehensive guidance
 - Provides patterns for progressive disclosure, workflows, and evaluation
@@ -352,6 +374,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### Improvements
 
 **Skill cross-reference clarity**
+
 - All skill references now use explicit requirement markers:
   - `**REQUIRED BACKGROUND:**` - Prerequisites you must understand
   - `**REQUIRED SUB-SKILL:**` - Skills that must be used in workflow
@@ -361,6 +384,7 @@ These changes address observed agent behavior where they rationalize around skil
 - Updated cross-reference documentation with best practices
 
 **Alignment with Anthropic best practices**
+
 - Fixed description grammar and voice (fully third-person)
 - Added Quick Reference tables for scanning
 - Added workflow checklists Claude can copy and track
@@ -379,6 +403,7 @@ These changes address observed agent behavior where they rationalize around skil
 ### Documentation
 
 **writing-skills improvements**
+
 - Updated cross-referencing guidance with explicit requirement markers
 - Added reference to Anthropic's official best practices
 - Improved examples showing proper skill reference format
@@ -405,11 +430,11 @@ We now use Anthropic's first-party skills system!
 
 ---
 
-# Superpowers v2.0.0 Release Notes
+# Orbty-eazy v2.0.0 Release Notes
 
 ## Overview
 
-Superpowers v2.0 makes skills more accessible, maintainable, and community-driven through a major architectural shift.
+Orbty-eazy v2.0 makes skills more accessible, maintainable, and community-driven through a major architectural shift.
 
 The headline change is **skills repository separation**: all skills, scripts, and documentation have moved from the plugin into a dedicated repository ([obra/orbty-eazy-skills](https://github.com/obra/orbty-eazy-skills)). This transforms orbty-eazy from a monolithic plugin into a lightweight shim that manages a local clone of the skills repository. Skills auto-update on session start. Users fork and contribute improvements via standard git workflows. The skills library versions independently from the plugin.
 
@@ -434,6 +459,7 @@ Users experience seamless operation: the plugin handles cloning, forking, and up
 **Migration:**
 
 If you have an existing installation:
+
 1. Your old `~/.config/orbty-eazy/.git` will be backed up to `~/.config/orbty-eazy/.git.bak`
 2. Old skills will be backed up to `~/.config/orbty-eazy/skills.bak`
 3. Fresh clone of obra/orbty-eazy-skills will be created at `~/.config/orbty-eazy/skills/`
@@ -448,12 +474,14 @@ If you have an existing installation:
 ### Skills Repository Infrastructure
 
 **Automatic Clone & Setup** (`lib/initialize-skills.sh`)
+
 - Clones obra/orbty-eazy-skills on first run
 - Offers fork creation if GitHub CLI is installed
 - Sets up upstream/origin remotes correctly
 - Handles migration from old installation
 
 **Auto-Update**
+
 - Fetches from tracking remote on every session start
 - Auto-merges with fast-forward when possible
 - Notifies when manual sync needed (branch diverged)
@@ -462,6 +490,7 @@ If you have an existing installation:
 ### New Skills
 
 **Problem-Solving Skills** (`skills/problem-solving/`)
+
 - **collision-zone-thinking** - Force unrelated concepts together for emergent insights
 - **inversion-exercise** - Flip assumptions to reveal hidden constraints
 - **meta-pattern-recognition** - Spot universal principles across domains
@@ -470,14 +499,17 @@ If you have an existing installation:
 - **when-stuck** - Dispatch to right problem-solving technique
 
 **Research Skills** (`skills/research/`)
+
 - **tracing-knowledge-lineages** - Understand how ideas evolved over time
 
 **Architecture Skills** (`skills/architecture/`)
+
 - **preserving-productive-tensions** - Keep multiple valid approaches instead of forcing premature resolution
 
 ### Skills Improvements
 
 **using-skills (formerly getting-started)**
+
 - Renamed from getting-started to using-skills
 - Complete rewrite with imperative tone (v4.0.0)
 - Front-loaded critical rules
@@ -486,32 +518,38 @@ If you have an existing installation:
 - Clearer distinction between rigid rules and flexible patterns
 
 **writing-skills**
+
 - Cross-referencing guidance moved from using-skills
 - Added token efficiency section (word count targets)
 - Improved CSO (Claude Search Optimization) guidance
 
 **sharing-skills**
+
 - Updated for new branch-and-PR workflow (v2.0.0)
 - Removed personal/core split references
 
 **pulling-updates-from-skills-repository** (new)
+
 - Complete workflow for syncing with upstream
 - Replaces old "updating-skills" skill
 
 ### Tools Improvements
 
 **find-skills**
+
 - Now outputs full paths with /SKILL.md suffix
 - Makes paths directly usable with Read tool
 - Updated help text
 
 **skill-run**
+
 - Moved from scripts/ to skills/using-skills/
 - Improved documentation
 
 ### Plugin Infrastructure
 
 **Session Start Hook**
+
 - Now loads from skills repository location
 - Shows full skills list at session start
 - Prints skills location info
@@ -519,6 +557,7 @@ If you have an existing installation:
 - Moved "skills behind" warning to end of output
 
 **Environment Variables**
+
 - `SUPERPOWERS_SKILLS_ROOT` set to `~/.config/orbty-eazy/skills`
 - Used consistently throughout all paths
 
@@ -532,6 +571,7 @@ If you have an existing installation:
 ## Documentation
 
 ### README
+
 - Updated for new skills repository architecture
 - Prominent link to orbty-eazy-skills repo
 - Updated auto-update description
@@ -539,6 +579,7 @@ If you have an existing installation:
 - Updated Meta skills list
 
 ### Testing Documentation
+
 - Added comprehensive testing checklist (`docs/TESTING-CHECKLIST.md`)
 - Created local marketplace config for testing
 - Documented manual testing scenarios
@@ -548,16 +589,19 @@ If you have an existing installation:
 ### File Changes
 
 **Added:**
+
 - `lib/initialize-skills.sh` - Skills repo initialization and auto-update
 - `docs/TESTING-CHECKLIST.md` - Manual testing scenarios
 - `.claude-plugin/marketplace.json` - Local testing config
 
 **Removed:**
+
 - `skills/` directory (82 files) - Now in obra/orbty-eazy-skills
 - `scripts/` directory - Now in obra/orbty-eazy-skills/skills/using-skills/
 - `hooks/setup-personal-orbty-eazy.sh` - Obsolete
 
 **Modified:**
+
 - `hooks/session-start.sh` - Use skills from ~/.config/orbty-eazy/skills
 - `commands/brainstorm.md` - Updated paths to SUPERPOWERS_SKILLS_ROOT
 - `commands/write-plan.md` - Updated paths to SUPERPOWERS_SKILLS_ROOT
@@ -567,6 +611,7 @@ If you have an existing installation:
 ### Commit History
 
 This release includes:
+
 - 20+ commits for skills repository separation
 - PR #1: Amplifier-inspired problem-solving and research skills
 - PR #2: Personal orbty-eazy overlay system (later replaced)
@@ -587,11 +632,13 @@ The plugin handles everything automatically.
 ### Upgrading from v1.x
 
 1. **Backup your personal skills** (if you have any):
+
    ```bash
    cp -r ~/.config/orbty-eazy/skills ~/orbty-eazy-skills-backup
    ```
 
 2. **Update the plugin:**
+
    ```bash
    /plugin update orbty-eazy
    ```
